@@ -1,62 +1,40 @@
 const { createStore } = require('redux');
 
-/* state ********/
-const states = {
-  str: '',
-  obj: {},
-};
+const state = require('./states');
+const reducer = require('./reducers');
+const { logIn, logOut, addPost, removePost } = require('./actions');
 
-/* action creator ********/
-// action은 객체다 - type, payload
-const actStr = (payload) => {
-  return {
-    type: 'ACT_STR',
-    payload,
-  };
-};
+const store = createStore(reducer, state);
 
-const actObj = (payload) => {
-  return {
-    type: 'ACT_OBJ',
-    payload,
-  };
-};
-
-/* reducer ********/
-// 한개의 함수다.
-const reducer = (prevState, { type, payload }) => {
-  switch (type) {
-    case 'ACT_STR':
-      return {
-        ...prevState,
-        str: payload,
-      };
-    case 'ACT_OBJ':
-      return {
-        ...prevState,
-        obj: payload,
-      };
-    default:
-      return prevState;
-  }
-};
-
-/* store ********/
-const store = createStore(reducer, states);
-console.log(store);
-
-/******************************************/
-
-/* subscribe ********/
+/* subscribe ***********/
 store.subscribe(() => {
+  // 만약에 react를 안쓴다면 UI의 변경은 여기서 처리
   console.log('subscribe ==========');
   console.log(store.getState());
 });
 
-/* dispatch ********/
-console.log('초기값 ==========');
-console.log(store.getState());
-
-store.dispatch({ type: 'ACT_STR', payload: 'B' });
-store.dispatch(actStr('C'));
-store.dispatch(actObj({ userid: 'booldook' }));
+/* 시나리오 ***********/
+store.dispatch(
+  logIn({
+    isLogIn: true,
+    data: { id: 1, userid: 'booldook', username: '홍길동' },
+  })
+);
+store.dispatch(
+  addPost({
+    id: 1,
+    writer: store.getState().user.data.userid,
+    comment: '홍길동이가 남기는 글',
+    createdAt: new Date(),
+  })
+);
+store.dispatch(
+  addPost({
+    id: 2,
+    writer: store.getState().user.data.userid,
+    comment: '홍길동이가 두번 째 남기는 글',
+    createdAt: new Date(),
+  })
+);
+store.dispatch(removePost(1));
+store.dispatch(logOut());

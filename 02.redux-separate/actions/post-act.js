@@ -12,4 +12,4 @@ const removePost = (payload) => {
   };
 };
 
-module.export = { addPost, removePost };
+module.exports = { addPost, removePost };

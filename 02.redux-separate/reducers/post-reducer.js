@@ -6,6 +6,8 @@ const postReducer = (prevState = init, { type, payload }) => {
       return [...prevState, payload];
     case 'REMOVE_POST':
       return prevState.filter((v) => v.id !== payload);
+    default:
+      return prevState;
   }
 };
 
