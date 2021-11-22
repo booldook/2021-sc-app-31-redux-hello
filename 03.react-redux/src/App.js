@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logIn, logOut } from './store/actions/user-act';
 
 function App() {
-  const user = useSelector((state) => state.user);
-  const post = useSelector((state) => state.post);
+  const { user, post } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const onLogIn = () => {
