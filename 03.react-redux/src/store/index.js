@@ -18,9 +18,14 @@ const myMiddleware = (store) => (next) => (action) => {
 };
 
 // process.env.NODE_ENV === 'development';
-const enhancer = composeWithDevTools(applyMiddleware(myMiddleware));
+// const enhancer = composeWithDevTools(applyMiddleware(myMiddleware))
 // process.env.NODE_ENV === 'production';
 // const enhancer = compose(applyMiddleware(myMiddleware));
+
+const enhancer =
+  process.env.NODE_ENV === 'production'
+    ? compose(applyMiddleware(myMiddleware))
+    : composeWithDevTools(applyMiddleware(myMiddleware));
 
 const store = createStore(reducer, state, enhancer);
 export default store;
