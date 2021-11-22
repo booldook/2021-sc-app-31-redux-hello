@@ -5,7 +5,9 @@
 4. 미들웨어에서 action을 가공해야 한다. <- redux-thunk, redux-saga
 5. 비동기액션은 function으로 만들어서 미들웨어에서 실행한다.
 */
+// const axios = require('axios');
 import axios from 'axios';
+
 const logIn = (payload) => {
   return async (dispatch) => {
     try {
@@ -34,4 +36,5 @@ const logOut = (payload) => {
   };
 };
 
+// module.exports = { logIn, logOut };
 export { logIn, logOut };

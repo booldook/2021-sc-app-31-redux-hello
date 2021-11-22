@@ -12,4 +12,5 @@ const removePost = (payload) => {
   };
 };
 
+// module.exports = { addPost, removePost };
 export { addPost, removePost };
