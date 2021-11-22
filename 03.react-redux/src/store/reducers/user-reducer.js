@@ -1,5 +1,6 @@
 const init = {
   isLogIn: false,
+  username: '',
   data: {},
 };
 
@@ -8,13 +9,21 @@ const userReducer = (prevState = init, { type, payload }) => {
     case 'LOG_IN':
       return {
         ...prevState,
-        isLogIn: payload.isLogIn,
-        data: payload.data,
+        isLogIn: false,
+        username: payload,
+      };
+    case 'LOG_ON':
+      return {
+        ...prevState,
+        isLogIn: true,
+        username: payload.username,
+        data: payload,
       };
     case 'LOG_OUT':
       return {
         ...prevState,
         isLogIn: false,
+        username: '',
         data: {},
       };
     default:

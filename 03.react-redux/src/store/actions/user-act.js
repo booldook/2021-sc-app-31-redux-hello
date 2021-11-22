@@ -6,19 +6,24 @@
 5. 비동기액션은 function으로 만들어서 미들웨어에서 실행한다.
 */
 import axios from 'axios';
-
-let userURL = 'https://jsonplaceholder.typicode.com/users?username=';
-
 const logIn = (payload) => {
   return async (dispatch, getState) => {
     try {
+      let userURL = 'https://jsonplaceholder.typicode.com/users?username=';
       console.log('=======');
-      userURL += payload.username;
+      userURL += payload;
       const { data } = await axios.get(userURL);
-      console.log(data);
+      dispatch(logOn(data[0]));
     } catch (err) {
       console.log(err);
     }
+  };
+};
+
+const logOn = (payload) => {
+  return {
+    type: 'LOG_ON',
+    payload, //
   };
 };
 
