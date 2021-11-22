@@ -6,12 +6,6 @@ const init = {
 
 const userReducer = (prevState = init, { type, payload }) => {
   switch (type) {
-    case 'LOG_IN':
-      return {
-        ...prevState,
-        isLogIn: false,
-        username: payload,
-      };
     case 'LOG_ON':
       return {
         ...prevState,

@@ -7,7 +7,7 @@
 */
 import axios from 'axios';
 const logIn = (payload) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let userURL = 'https://jsonplaceholder.typicode.com/users?username=';
       console.log('=======');
