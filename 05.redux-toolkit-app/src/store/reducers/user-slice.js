@@ -11,12 +11,11 @@ const initialState = {
 /** async action **********/
 export const logIn = createAsyncThunk('user/logIn', async (username) => {
   const user = await logInAsync(username);
-  console.log(user);
   return user;
 });
 
 /** reducer **********/
-export const counterSlice = createSlice({
+export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -38,18 +37,24 @@ export const counterSlice = createSlice({
         state.isLogging = false;
         state.isLogOn = true;
         state.data = action.payload;
+      })
+      .addCase(logIn.rejected, (state, action) => {
+        // axios error
+        state.isLogging = false;
+        state.data = {};
       });
   },
 });
 
 /** custom methods **********/
-export const getUser = (state) => state;
-export const getUserData = (state) => state.data;
-// export const getUserName = (state) => state.data.username;
+export const getUser = (state) => state.user;
+export const getUserData = (state) => state.user.data;
 export const getAddress = (state) => {
-  const { zipcode, street, suite, city } = state.data.address;
-  return `[${zipcode}] ${city} ${street} ${suite}`;
+  if (state.user.isLogOn) {
+    const { zipcode, street, suite, city } = state.user.data.address;
+    return `[${zipcode}] ${city} ${street} ${suite}`;
+  } else return '';
 };
 
-export const { logOut } = counterSlice.actions;
-export default counterSlice.reducer;
+export const { logOut } = userSlice.actions;
+export default userSlice.reducer;

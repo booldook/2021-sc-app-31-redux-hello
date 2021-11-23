@@ -10,12 +10,12 @@ import {
 } from './store/reducers/user-slice';
 
 function App() {
-  const { isLogging, isLogOn } = useSelector(getUser);
+  const { isLogOn } = useSelector(getUser);
   const userData = useSelector(getUserData);
+  const userAddress = useSelector(getAddress);
   const dispatch = useDispatch();
 
   const onLogIn = () => {
-    console.log('Login');
     dispatch(logIn('Delphine'));
   };
 
@@ -27,8 +27,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div>
-          {isLogOn ? userData.userName + ' 로그인 되었습니다.' : '로그인 하세요.'}
+          {isLogOn ? userData.username + ' 로그인 되었습니다.' : '로그인 하세요.'}
         </div>
+        <div>{userAddress}</div>
         <div>
           <div onClick={onLogIn}>로그인</div>
           <div onClick={onLogOut}>로그아웃</div>
