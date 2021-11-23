@@ -1,3 +1,5 @@
+import { produce } from 'immer';
+
 const init = {
   isLogIn: false,
   username: '',
@@ -5,24 +7,22 @@ const init = {
 };
 
 const userReducer = (prevState = init, { type, payload }) => {
-  switch (type) {
-    case 'LOG_ON':
-      return {
-        ...prevState,
-        isLogIn: true,
-        username: payload.username,
-        data: payload,
-      };
-    case 'LOG_OUT':
-      return {
-        ...prevState,
-        isLogIn: false,
-        username: '',
-        data: {},
-      };
-    default:
-      return prevState;
-  }
+  return produce(prevState, (draft) => {
+    switch (type) {
+      case 'LOG_ON':
+        draft.isLogIn = true;
+        draft.username = payload.username;
+        draft.data = payload;
+        break;
+      case 'LOG_OUT':
+        draft.isLogIn = false;
+        draft.username = '';
+        draft.data = {};
+        break;
+      default:
+        return prevState;
+    }
+  });
 };
 
 export default userReducer;
